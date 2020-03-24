@@ -1,26 +1,67 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import SearchBar from './components/SearchBar';
+import { fetchEvents } from './Webservices';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import './App.css';
+//api key AAnmpsnxBu1lnxN07CW7taV7TmPmMeVM
+class App extends Component {
+  constructor() {
+    super();
+    this.initialState = {
+      events: []
+    }
+    this.state = { ...this.initialState }
+  }
+
+  fetchEvents = async () => {
+    let events = await fetchEvents();
+    this.setState({ events });
+  }
+
+  renderTableBody = () => {
+    let body = this.state.events.map(({ name, id, dates, sales, priceRanges, _embedded, url }) => {
+      return (
+        <tr key={id}>
+          <th><a href={url} target="_blank">{name}</a></th>
+          <th>{sales.presales ? sales.presales[0].startDateTime : 'No presale'}</th>
+          <th>{sales.public.startDateTime}</th>
+          <th>{dates.start.localDate}</th>
+          <th>{priceRanges && priceRanges[0].min} - {priceRanges && priceRanges[0].max}</th>
+          <th>{_embedded.venues[0].name ? _embedded.venues[0].name : 'N/A'}</th>
+        </tr>
+      )
+    })
+
+    return body;
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <h1>Music Events</h1>
+        <SearchBar onInputSubmit={this.fetchEvents} />
+        {this.state.events.length ?
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Presale</th>
+                <th>Regular</th>
+                <th>Event Date</th>
+                <th>Price Range</th>
+                <th>Venue</th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.renderTableBody()}
+            </tbody>
+          </table>
+          :
+          null
+        }
+      </div>
+    );
+  }
 }
 
 export default App;
