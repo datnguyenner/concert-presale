@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import SearchBar from './components/SearchBar';
+import SignIn from './components/SignIn/SignIn.js';
+import Register from './components/Register/Register.js';
+import Nav from './components/Navigation/Nav.js';
 import { fetchEvents } from './Webservices';
 
 import './App.css';
@@ -8,9 +11,14 @@ class App extends Component {
   constructor() {
     super();
     this.initialState = {
-      events: []
+      events: [],
+      route: 'SignIn'
     }
     this.state = { ...this.initialState }
+  }
+
+  changeRoute = (route) => {
+    this.setState({ route });
   }
 
   fetchEvents = async () => {
@@ -35,30 +43,45 @@ class App extends Component {
     return body;
   }
 
+  renderHome = () => {
+
+    if (this.state.route === 'Home') {
+      return (
+        <div>
+          <Nav signOut={this.changeRoute} />
+          <SearchBar onInputSubmit={this.fetchEvents} />
+          {this.state.events.length ?
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Presale</th>
+                  <th>Regular</th>
+                  <th>Event Date</th>
+                  <th>Price Range</th>
+                  <th>Venue</th>
+                </tr>
+              </thead>
+              <tbody>
+                {this.renderTableBody()}
+              </tbody>
+            </table>
+            :
+            null
+          }
+        </div>
+      )
+    }
+
+  }
+
   render() {
     return (
       <div className="App">
         <h1>Music Events</h1>
-        <SearchBar onInputSubmit={this.fetchEvents} />
-        {this.state.events.length ?
-          <table>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Presale</th>
-                <th>Regular</th>
-                <th>Event Date</th>
-                <th>Price Range</th>
-                <th>Venue</th>
-              </tr>
-            </thead>
-            <tbody>
-              {this.renderTableBody()}
-            </tbody>
-          </table>
-          :
-          null
-        }
+        {this.state.route === 'SignIn' && <SignIn signIn={this.changeRoute} register={this.changeRoute}/>}
+        {this.state.route === 'Register' && <Register register={this.changeRoute}/>}
+        {this.renderHome()}
       </div>
     );
   }

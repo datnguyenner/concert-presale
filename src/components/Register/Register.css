@@ -1,0 +1,29 @@
+.register {
+    margin: auto;
+    width: 30%;
+    border: 3px solid #000000;
+}
+
+
+.register input {
+    width: 80%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.register button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px;
+    border: none;
+    cursor: pointer;
+    width: 20%;
+}
+/* Add a hover effect for buttons */
+.register button:hover {
+    opacity: 0.8;
+}
