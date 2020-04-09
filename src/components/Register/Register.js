@@ -103,7 +103,7 @@ class Register extends Component {
                 <form className="form" onSubmit={this.handleSubmit}>
                     <h2>Register</h2>
                     <div className="form-control">
-                        <label htmlFor="uname">username</label>
+                        <label htmlFor="uname">Username</label>
                         <input className={username.validate} type="text" placeholder="Enter username" onChange={this.onchangeName} name="uname" />
                         <small>{username.validate === 'error' ? username.errorMsg : ''}</small>
                     </div>
