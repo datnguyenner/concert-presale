@@ -4,9 +4,22 @@ import SignIn from './components/SignIn/SignIn.js';
 import Register from './components/Register/Register.js';
 import Nav from './components/Navigation/Nav.js';
 import { fetchEvents } from './Webservices';
+import Particles from 'react-particles-js';
 
 import './App.css';
 //api key AAnmpsnxBu1lnxN07CW7taV7TmPmMeVM
+const particlesOptions = {
+  particles: {
+    number: {
+      value: 80,
+      density: {
+        enable: true,
+        value_area: 800
+      }
+    }
+  }
+}
+
 class App extends Component {
   constructor() {
     super();
@@ -79,6 +92,9 @@ class App extends Component {
     return (
       <div className="App">
         <h1>Find presale</h1>
+        <Particles className='particles'
+          params={particlesOptions}
+        />
         {this.state.route === 'SignIn' && <SignIn signIn={this.changeRoute} register={this.changeRoute}/>}
         {this.state.route === 'Register' && <Register register={this.changeRoute}/>}
         {this.renderHome()}
