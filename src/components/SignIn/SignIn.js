@@ -75,9 +75,9 @@ class SignIn extends Component {
         const { email, password } = this.state;
 
         return (
-            <div className="register">
+            <div className="signin">
                 <form className="form" onSubmit={this.handleSubmit}>
-                    <h2>Register</h2>
+                    <h2>Sign in</h2>
                     <div className="form-control">
                         <label htmlFor="email">Email</label>
                         <input className={email.validate} type="text" placeholder="Enter Email" onChange={this.onchangeEmail} name="email" />

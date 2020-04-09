@@ -78,7 +78,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <h1>Music Events</h1>
+        <h1>Find presale</h1>
         {this.state.route === 'SignIn' && <SignIn signIn={this.changeRoute} register={this.changeRoute}/>}
         {this.state.route === 'Register' && <Register register={this.changeRoute}/>}
         {this.renderHome()}
